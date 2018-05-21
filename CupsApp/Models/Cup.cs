@@ -20,11 +20,16 @@ namespace CupsApp.Models
         public double Capacity { get; set; }
         public CupType? CupType { get; set; }
         public int CountryID { get; set; }
-        public virtual ICollection<CupImage> CupImages { get; set; }
+        public virtual CupImage CupImage { get; set; }
         public virtual Country Country { get; set; }
-        //[NotMapped]
-        //public HttpPostedFileBase ImageUpload { get; set; }
-       
+        [NotMapped]
+        public string ImagePath { get; set; }
+        [NotMapped]
+        public HttpPostedFileBase ImageUpload { get; set; }
+        public Cup()
+        {
+            ImagePath = "~/AppFiles/Images/default.png";
+        }
 
     }
 }

@@ -15,11 +15,14 @@ namespace CupsApp.Context
             Database.SetInitializer<CupContext>(new CreateDatabaseIfNotExists<CupContext>());
         }
         public DbSet<Cup> Cups { get; set; }
-        public DbSet<CupImage> CupImages { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<CupImage> CupImages { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Entity<Cup>()
+               .HasOptional(s => s.CupImage)
+               .WithRequired(ad => ad.Cup);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -10,13 +11,17 @@ namespace CupsApp.Models
     public class CupImage
     {
         [Key]
-        public int CupImgID { get; set; }
+        [ForeignKey("Cup")]
+        public int CupImageID { get; set; }
         public byte[] Image { get; set; }
-        public int CupId { get; set; }
         public virtual Cup Cup { get; set; }
 
-        [NotMapped]
-        public HttpPostedFileBase ImageUpload { get; set; }
-        
+        //[DisplayName("Image")]
+        //public string ImagePath { get; set; }
+
+        //public CupImage()
+        //{
+        //    ImagePath = "~/AppFiles/Images/default.png";
+        //}
     }
 }

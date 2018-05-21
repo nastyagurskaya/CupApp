@@ -5,15 +5,16 @@
     Layout = null;
 }
 
-@using (Html.BeginForm(Html.BeginForm("AddOrEdit", "Cups", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return jQuaryAjaxPost(this);", data_restUrl=Url.Action("AddOrEdit","Cups", new { id = 0 }) })))
+@using (Html.BeginForm("AddOrEdit", "Cups", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "return jQuaryAjaxPost(this);", data_restUrl=Url.Action("AddOrEdit","Cups", new { id = 0 }) }))
 {
 
     <div class="row">
         @Html.AntiForgeryToken()
             <hr />
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="col-md-10">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.CupId)
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.Capacity, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -29,6 +30,7 @@
                         @Html.ValidationMessageFor(model => model.CupType, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.CountryID, "CountryID", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -36,21 +38,33 @@
                         @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ImagePath, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @if (Model.CupId != 0)
+                        {
+                        <img src="@Url.Action("GetImage", new { id = Model.CupId})" style="margin:10px" height="200" width="200" id="imagePreview"/>
+                        }
+                            @if (Model.CupId == 0)
+                        {
+                        <img src="@Url.Content(Model.ImagePath)" style="margin:10px" height="200" width="200" id="imagePreview" />
+                        }
 
-
-                <div class="form-group">
-                    <b class="control-label col-md-2">Select image</b>
-                    <div class="col-md-10">
-                        @*<img src="@Url.Action("GetImage", new { id = Model.CupImage.CupImgID })" style="margin:10px" height="200" width="200" id="imagePreview" />*@
-                        <input type="file" name="imageUpload" accept="image/jpeg, image/png" onchange="ShowImagePreview(this, document.getElementById('imagePreview')" />
+                            <input type="file" name="ImageUpload" accept="image/jpeg, image/png" onchange="ShowImagePreview(this,document.getElementById('imagePreview'))" />
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Save" class="btn btn-default" />
+                        @if (Model.CupId != 0)
+            {
+                <a class="btn btn-success" onclick="refreshAddNewTab('@Url.Action("AddOrEdit","Cups",new{id=0})',false)"><i class="fa fa-plus"></i> Add New</a>
+        }
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 }

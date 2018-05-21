@@ -16,13 +16,13 @@ namespace CupsApp.Context
             foreach (CultureInfo cul in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
             {
                 countryReg = new RegionInfo(new CultureInfo(cul.Name, false).LCID);
-                string countryName= countryReg.DisplayName.ToString();
-                if(!countriesNames.Contains(countryName))
-                    countriesNames.Add( countryName );
+                string countryName = countryReg.DisplayName.ToString();
+                if (!countriesNames.Contains(countryName))
+                    countriesNames.Add(countryName);
             }
             countriesNames.Sort();
 
-            countriesNames.ForEach(c => context.Countries.Add(new Country { CountryName = c}));
+            countriesNames.ForEach(c => context.Countries.Add(new Country { CountryName = c }));
             context.SaveChanges();
         }
     }
