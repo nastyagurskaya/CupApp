@@ -18,7 +18,9 @@ namespace CupsApp.Models
         [Required]
         [Range(0.1, 2.0)]
         public double Capacity { get; set; }
-        public CupType? CupType { get; set; }
+        [Required]
+        public CupType CupType { get; set; }
+        [Required]
         public int CountryID { get; set; }
         public virtual CupImage CupImage { get; set; }
         public virtual Country Country { get; set; }
